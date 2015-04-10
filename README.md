@@ -13,12 +13,20 @@ The line above will use the ‘FooController’ (see below) and call the ‘Some
 public class FooController : SwiftController { public IRenderResult Something() { return View(); } }
 
 Main features of Swift:
+
 1. Full MVC stack: controllers, views, and models.
+
 2. Custom ViewTypeParserFilter to support ascx views with no code-behind.
+
 3. ASP.NET MVC-like syntax in controllers. (Allowing for easier transition to ASP.NET MVC in future.)
+
 4. Minimal global configuration required.
 5. Fully compatible with WebForms.
+
 6. Dependency injection in controllers.
+
 7. DbHelper tools, making code working with database concise, readable, and elegant.
+
 8. Native support for Json responses and ajax calls.
+
 9. Action filters.
