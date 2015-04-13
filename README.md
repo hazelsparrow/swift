@@ -6,7 +6,7 @@ Would you like to start using an MVC pattern in your existing ASP.NET WebForms a
 For example: 
 You need to write a new ascx control, ‘Foo_Something.ascx’. It resides in a standard Web form and possibly in another ascx control that uses WebForms. You can invoke Swift from this new control by doing this:
 
-<%= SwiftHelper.Render("Something") %>
+<%= SwiftHelper.Render<FooController>("Something") %>
 
 The line above will use the ‘FooController’ (see below) and call the ‘Something’ method that returns ‘Foo_Something.ascx’ as the view.
 
