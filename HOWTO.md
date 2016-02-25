@@ -225,8 +225,12 @@ public class Customer : IPersistent
 
 public class CustomerRepository
 {
-      public IEnumerable<Customer> GetCustomers()
+      public IEnumerable<Customer> GetCustomers(string filter, DateTime minRegisteredDate, int rating)
       {
-            
+            // call the GetCustomers stored proc and pass in three arguments
+            return DbHelper.GetList<Customer>("GetCustomers",
+                  new DbParameter("filter", filter),
+                  new DbParameter("minRegisteredDate", minRegisteredDate),
+                  new DbParameter("rating", rating));
       }
 }
