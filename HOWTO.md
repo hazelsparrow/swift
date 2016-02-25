@@ -60,3 +60,31 @@ Another way of using Swift is rendering a partial view. Partial views are basica
 ```
 
 Note that the same view can be used as a partial view or a full-fledged view (rendered from within a controller).
+
+#### Swift controllers
+Any class implementing ISwiftController interface can be a Swift controller. Usually you would want to derive your controllers from SwiftController, which is a base class providing a bunch of useful methods.
+
+An example of a Swift controller is given below.
+
+```
+public class MyController: SwiftController
+{
+      ...
+      
+      public IRenderResult Index()
+      {
+            return View("MyView.ascx", null); // render the view with model = null
+      }
+      
+      [HttpPost] // this method only allows POST requests
+      public object Products(int categoryId) // categoryId will be populated from request
+      {
+            var products = repository.GetProductsByCategory(categoryId);
+            return products; // equivalent to return Json(products); -- this will automatically serialize the result to JSON
+      }
+      
+      ...
+}
+```
+
+This controller defines two methods. Index is available through GET and POST requests and doesn't take any arguments. Products is only available through POST requests and reads categoryId from request (it could be in the URL, e.g., "?categoryId=223", or in the POST payload). The Products method is useful for AJAX calls returning JSON data.
