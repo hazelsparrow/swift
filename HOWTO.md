@@ -88,3 +88,61 @@ public class MyController: SwiftController
 ```
 
 This controller defines two methods. Index is available through GET and POST requests and doesn't take any arguments. Products is only available through POST requests and reads categoryId from request (it could be in the URL, e.g., "?categoryId=223", or in the POST payload). The Products method is useful for AJAX calls returning JSON data.
+
+#### Swift views
+MyController above uses view MyView.ascx in the Index method. This view could look something like below:
+
+```
+<%@ Control Inherits="object"  AutoEventWireup="false" EnableTheming="false" EnableViewState="false" Language="C#" %>
+<%@ Import Namespace="Swift" %>
+
+<p>
+      Hello, this is a Swift view!
+</p>
+```
+
+**Important:** Inherits attribute in Swift views contains the type of the model used by the view (similarly to the @model directive in Razor), rather than the base class for the ASP .NET control. This helps with Intellisense when you use models in your view.
+
+In most cases, you would want to create a new class for a model for each complex view. For example:
+
+```
+
+public class HelloWorldViewModel
+{
+      public HelloWorldViewModel() { }
+      
+      private string user = null;
+      
+      public HelloWorldViewModel(string user)
+      {
+            this.user = user;
+      }
+      public string Greeting 
+      {
+            get
+            {
+                  return string.Format("Hello, {0}!", user ?? "World");
+            }
+      }
+}
+
+public class MyController: SwiftController
+{
+      public IRenderResult HelloWorld(string user)
+      {
+            return View("HelloWorld.ascx", new HelloWorldViewModel(user));
+      }
+}
+
+```
+
+In HelloWorld.ascx:
+
+```
+<%@ Control Inherits="HelloWorldViewModel"  AutoEventWireup="false" EnableTheming="false" EnableViewState="false" Language="C#" %>
+<%@ Import Namespace="Swift" %>
+
+<p>
+      <%= Model.Greeting %>
+</p>
+```
