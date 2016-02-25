@@ -18,4 +18,17 @@ Swift comes with a custom view parser that is required to handle ascx files with
       </controls>
 </pages>
 ````
+#### Setting up Swift
+There's three things that you have to do in your global.asax file, typically in Application_Start:
 
+1. Tell Swift where to look for all views (ascx files). Swift expects all views to be in the single folder. Nested or multiple folders are currently not supported. 
+2. Set default connection name to use with DbHelper. (This is optional if you are not going to use DbHelper and instead will be using an external ORM or any other DAL framework.)
+3. Call LoadDependencyModules so that Swift can pick up all dependency modules. This is used later for resolving dependencies when Swift instantiates controllers.
+
+The end result will look something like this:
+
+```
+Swift.HtmlHelper.SetControlsVirtualPath("/usercontrols");
+Swift.DbHelper.SetDefaultConnectionName(DbConnections.RemaxReadOnly().ConnectionString); // optional
+Swift.DependencyResolver.LoadDependencyModules(); 
+```
