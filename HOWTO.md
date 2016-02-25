@@ -9,7 +9,7 @@ This extension adds a template for a Swift view. A Swift view is just an `.ascx`
 It is recommended to add new Swift views through this extension. After installing this extension, a new item will be added to "Add new item" menu in Visual Studio.
 
 #### Configuring Swift View Parser
-Swift comes with a custom view parser that is required to handle ascx files with no codebehind and support Intellisense when working with models in `.ascx` files. To set it up, change the `<pages>` node in your `web.config` as follows:
+Swift comes with a custom view parser tGhat is required to handle ascx files with no codebehind and support Intellisense when working with models in `.ascx` files. To set it up, change the `<pages>` node in your `web.config` as follows:
 
 ```
 <pages validateRequest="false" enableEventValidation="false" pageParserFilterType="Swift.ViewTypeParserFilter, Swift" userControlBaseType="Swift.SwiftControl, Swift">
@@ -234,3 +234,4 @@ public class CustomerRepository
                   new DbParameter("rating", rating));
       }
 }
+```
