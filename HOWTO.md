@@ -34,7 +34,11 @@ Swift.DependencyResolver.LoadDependencyModules();
 ```
 #### Summary
 To start using Swift in your project:
+
 1. Add a reference to Swift.
 2. Install the Swift extension for Visual Studio.
 3. Modify your web.config to enable Swift's custom view parser.
 4. Initialize Swift in Application_Start in your global.asax.
+
+
+
