@@ -235,3 +235,63 @@ public class CustomerRepository
       }
 }
 ```
+
+There's a number of different methods in DbHelper -- they are pretty self-explanatory. 
+Note that those methods use the DefaultConnectionString (that you had set up in the beginning). It's also possible to call methods of DbHelper with a different connection string (look at overloaded versions). 
+
+**Note**: The underlying DAL, SwiftDataAccess, also supports ad-hoc SQL statements (not necessarily stored procs), but for simplicity of method signatures DbHelper does not include support for them. If in your product you need arbitrary SQL statements, feel free to modify/add functions to DbHelper.
+
+# Miscellanious
+
+#### Action filters
+You can use action filters to define actions that will be executed before or after invoking a controller method. 
+
+```
+public class MyController : SwiftController
+{
+      ...
+      
+      [MyFilter]
+      public IRenderResult Example()
+      {
+            return View(...);
+      }
+      
+      ...
+}
+
+public class MyFilterAttribute : ActionFilterAttribute
+{
+      public override void ExecuteBeforeAction(ActionContext context)
+      {
+            // this method will be invoked before invoking controller's method
+            // if you assign anything to context.RenderResult, controller's method won't get invoked
+            ...
+            context.RenderResult = SwiftHelper.Render<SomeOtherController>("SomeView.ascx", model);
+            // or, for example, you can use a  redirect
+            context.RenderResult = new RedirectResult("/loginRequired/");
+      }
+      
+      public override void ExecuteAfterAction(ActionContext context)
+      {
+            // this method will be invoked before invoking controller's method
+      }
+}
+```
+
+Swift supports CORS by default; just mark your controller method with `[EnableCors]` attribute.
+
+#### View utility
+
+Each Swift view has access to the Html object (of type ViewUtility) that provides a number of useful shortcuts.
+
+```
+<%= Html.Partial("_MyPartial.ascx") %> 
+```
+(This is lieu of the more generic `SwiftHelper.RenderPartial("_MyPartial.ascx")` that is accessible anywhere, not just inside Swift views.)
+
+You can also add extension methods to ViewUtility to add application-specific shortcuts.
+
+#### Swift dependencies
+
+Swift depends on `Ninject` which it includes through a NuGet package. 
