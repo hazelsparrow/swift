@@ -204,3 +204,29 @@ MyProject.csproj
       Tools
             MyProjectDependencyModule.cs
 ```
+
+# DbHelper
+While completely optional, Swift offers a thin wrapper around ADO .NET for working with database.
+
+A typical example would be getting a list of customers from the database. Assuming you have a table Customer and a class Customer, you can get that list as follows:
+
+```
+public class Customer : IPersistent 
+{
+      public string Name { get; set; }
+      public int Id { get; set; }
+
+      public void Init(ISwiftDataReader reader)
+      {
+            Id = reader.GetInt32("CustomerId"); // assumes there is an integer column CustomerId in the Customer table
+            Name = reader.GetString("CustomerName");
+      }
+}
+
+public class CustomerRepository
+{
+      public IEnumerable<Customer> GetCustomers()
+      {
+            
+      }
+}
