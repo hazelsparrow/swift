@@ -18,7 +18,7 @@ Swift comes with a custom view parser that is required to handle ascx files with
       </controls>
 </pages>
 ````
-#### Setting up Swift
+#### Setting up Swift in global.asax
 There's three things that you have to do in your global.asax file, typically in Application_Start:
 
 1. Tell Swift where to look for all views (ascx files). Swift expects all views to be in the single folder. Nested or multiple folders are currently not supported. 
@@ -32,3 +32,9 @@ Swift.HtmlHelper.SetControlsVirtualPath("/usercontrols");
 Swift.DbHelper.SetDefaultConnectionName(ConfigurationManager.ConnectionStrings["default"]); // optional
 Swift.DependencyResolver.LoadDependencyModules(); 
 ```
+#### Summary
+To start using Swift in your project:
+1. Add a reference to Swift.
+2. Install the Swift extension for Visual Studio.
+3. Modify your web.config to enable Swift's custom view parser.
+4. Initialize Swift in Application_Start in your global.asax.
