@@ -177,3 +177,30 @@ public class MyRepository : IMyRepository
 ```
 
 When MyController gets instantiated, Swift will notice that it requires an instance of IMyRepository and will look it up in all the dependency modules in your bin folder. (Swift gathers all dependency modules only once when the application starts.) It will automatically create an instance of MyRepository and pass it to the constructor of MyController. If MyRepository's constructor also includes any dependencies, Swift will instantiate them recursively as well.
+
+#### Typical folder structure 
+
+The project structure below is just one possible way to organize your Swift projects -- feel free to use it as a reference. Naturally, Swift doesn't care how your project is structured as long as it has access to all types (controllers, models, etc.) that it needs. Note that all views have to be under the same folder though. If you have multiple Swift projects, you would want to have a post-build script that copies all ascx files to a single location.
+
+```
+MyProject.csproj
+      Controllers
+            MyController.cs
+            OtherController.cs
+      Models
+            Product.cs
+            Agent.cs
+            Customer.cs
+      Repositories
+            ProductRepository.cs
+            AgentRepository.cs
+            CustomerRepository.cs
+      Views
+            MyHome.ascx
+            ProductList.ascx
+            CustomerList.ascx
+            CustomerDetails.ascx
+            _Pagination.ascx
+      Tools
+            MyProjectDependencyModule.cs
+```
