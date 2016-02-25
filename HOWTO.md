@@ -41,4 +41,22 @@ To start using Swift in your project:
 4. Initialize Swift in Application_Start in your global.asax.
 
 
+# Using Swift
 
+You can start using Swift right away, without having to convert your existing projects. Suppose we have an existing user control MyControl.ascx. It's using postbacks and all the standard WebForms controls: <asp:Button>, <asp:DropDownList>, etc. Imagine that you need to add a new piece of functionality to this control, for example a new search form. 
+
+Assuming you have created a SearchFormController with a single method Index(), you can invoke it in MyControl.ascx as follows:
+
+```
+<%= SwiftHelper.Render<SearchFormController>("Index") %>
+```
+
+This call will instantiate SearchFormController and call its method Index. If Index accepts any arguments, they will be populated from the request (more on that later). It will then use the return value from Index to insert it back into MyControl.ascx.
+
+Another way of using Swift is rendering a partial view. Partial views are basically the same Swift views but what makes them "partial" is the fact that they're missing a controller that would create a model and pass it to them. Instead, a model is being passed to such views directly from where they are being used, e.g.:
+
+```
+<%= SwiftHelper.PartialView("_SearchForm.ascx", new SearchFormViewModel { ... }) %>
+```
+
+Note that the same view can be used as a partial view or a full-fledged view (rendered from within a controller).
