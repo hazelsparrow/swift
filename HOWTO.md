@@ -29,6 +29,6 @@ The end result will look something like this:
 
 ```
 Swift.HtmlHelper.SetControlsVirtualPath("/usercontrols");
-Swift.DbHelper.SetDefaultConnectionName(DbConnections.RemaxReadOnly().ConnectionString); // optional
+Swift.DbHelper.SetDefaultConnectionName(ConfigurationManager.ConnectionStrings["default"]); // optional
 Swift.DependencyResolver.LoadDependencyModules(); 
 ```
