@@ -101,12 +101,11 @@ MyController above uses view MyView.ascx in the Index method. This view could lo
 </p>
 ```
 
-**Important:** Inherits attribute in Swift views contains the type of the model used by the view (similarly to the @model directive in Razor), rather than the base class for the ASP .NET control. This helps with Intellisense when you use models in your view.
+**Important:** `Inherits` attribute in Swift views contains the type of the model used by the view (similarly to the @model directive in Razor), rather than the base class for the ASP .NET control. This helps with Intellisense when you use models in your view.
 
 In most cases, you would want to create a new class for a model for each complex view. For example:
 
 ```
-
 public class HelloWorldViewModel
 {
       public HelloWorldViewModel() { }
@@ -133,7 +132,6 @@ public class MyController: SwiftController
             return View("HelloWorld.ascx", new HelloWorldViewModel(user));
       }
 }
-
 ```
 
 In HelloWorld.ascx:
@@ -146,3 +144,36 @@ In HelloWorld.ascx:
       <%= Model.Greeting %>
 </p>
 ```
+
+**Note:** you can also create normal user controls (ascx) with code behind and use them as Swift views. To do so, you need to inherit them from SwiftControl<T>, where T is the type of your model. If you decide to follow this approach, you don't need to add Swift's custom view parser to your web config. You also won't need the Swift extension for visual studio.
+
+#### Dependency injection
+
+You can declare dependencies for your controllers like this:
+
+```
+public class MyController : SwiftController
+{
+      private IMyRepository repository = null;
+      
+      public MyController(IMyRepository repository)
+      {
+            this.repository = repository;
+      }
+}
+
+public class MyDependencyModule : DependencyModule
+{
+      public override void Load()
+      {
+            Bind<IMyRepository>().To<MyRepository>(); 
+      }
+}
+
+public class MyRepository : IMyRepository
+{
+      ... // implementation of IMyRepository
+}
+```
+
+When MyController gets instantiated, Swift will notice that it requires an instance of IMyRepository and will look it up in all the dependency modules in your bin folder. (Swift gathers all dependency modules only once when the application starts.) It will automatically create an instance of MyRepository and pass it to the constructor of MyController. If MyRepository's constructor also includes any dependencies, Swift will instantiate them recursively as well.
